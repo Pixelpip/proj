@@ -3,12 +3,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Scanner;
 
 public class WeatherApp {
 
     public static void main(String[] args) {
         String apiKey = "d94a1a5aa3c285a26a3d45c0e357d771";
-        String city = "beijing";
+        Scanner scan=new Scanner(System.in);
+        System.out.println("enter the city you want to know the weather of:");
+
+        String city = scan.nextLine();
         String apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
         try {
