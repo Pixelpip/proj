@@ -5,7 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class WeatherApp {
+public class Weather{
 
     public static void main(String[] args) {
         String apiKey = "d94a1a5aa3c285a26a3d45c0e357d771";
