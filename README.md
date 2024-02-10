@@ -23,6 +23,8 @@ Error handling is minimal. The application simply prints stack traces if any exc
 
 
 Contributors:
+
+<br>
 <a href="https://github.com/pixelpip/proj/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=pixelpip/proj" />
 </a>
