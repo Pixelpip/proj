@@ -23,10 +23,5 @@ The application's JSON parsing is simplistic and may not handle all possible res
 Error handling is minimal. The application simply prints stack traces if any exception occurs during the execution.
 
 
-## Contributors:
 
-<br>
-<a href="https://github.com/pixelpip/proj/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=pixelpip/proj" />
-</a>
 
