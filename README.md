@@ -2,12 +2,12 @@
 
 This is a simple Java application that retrieves and displays the current temperature of a given city using the OpenWeatherMap API.
 
-# # How to Use
+## How to Use
 Compile the *Weather.java* file & run the *Weather.class* file.
 Enter the name of the city you want to know the weather for when prompted.
 
 The application will fetch the current temperature for the entered city and display it in degrees Celsius.
-# # Dependencies
+## Dependencies
 This project relies on the following:
 
 _Java 8 or higher_
@@ -23,7 +23,7 @@ The application's JSON parsing is simplistic and may not handle all possible res
 Error handling is minimal. The application simply prints stack traces if any exception occurs during the execution.
 
 
-# # Contributors:
+## Contributors:
 
 <br>
 <a href="https://github.com/pixelpip/proj/graphs/contributors">
