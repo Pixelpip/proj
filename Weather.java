@@ -33,7 +33,7 @@ public class Weather{
 
             // Parse the JSON response to get the temperature
             String jsonResponse = response.toString();
-            double temperature = parseTemperature(jsonResponse) -273.15;
+            double temperature = parseTemperature(jsonResponse) -273.15;  //Temperature is obtained in Kelvin and has been converted to Celsius
 
             System.out.printf("Current Temperature in %s: %.2f degrees Celsius\n", city, temperature);
         } catch (IOException e) {
@@ -42,7 +42,7 @@ public class Weather{
     }
 
     private static double parseTemperature(String jsonResponse) {
-        // This is a simple parser, you may want to use a JSON parsing library for more robust handling
+    
         int startIndex = jsonResponse.indexOf("\"temp\":") + 7;
         int endIndex = jsonResponse.indexOf(",", startIndex);
 
