@@ -4,6 +4,7 @@ import static spark.Spark.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,7 +18,7 @@ public class Weather {
         // Define a route to render the form
         get("/", (req, res) -> {
             return "<form action='/' method='post'>" +
-                    "Enter your city name: <input type='text' name='username'>" +
+                    "Enter the city name: <input type='text' name='username'>" +
                     "<input type='submit' value='Submit'>" +
                     "</form>";
         });
@@ -29,28 +30,20 @@ public class Weather {
             String apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
             try {
-                URL url = new URL(apiUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
+                String jsonText="";
+                URL url=new URL(apiUrl);
+                InputStream is=url.openStream();
+                BufferedReader bufferReader=new BufferedReader(new InputStreamReader(is));
                 String line;
-
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
+                while((line=bufferReader.readLine())!=null){
+                    jsonText+=line+"\n";
                 }
+                is.close();
+                bufferReader.close();
 
-                reader.close();
-                connection.disconnect();
-
-                // Parse the JSON response to get the temperature
-                String jsonResponse = response.toString();
-                temperature = parseTemperature(jsonResponse) - 273.15;
-                formattedTemperature = String.format("%.2f", temperature);
 
                 // Return the result
-                return "Temperature of " + city + " is " + formattedTemperature + " degrees Celsius";
+                return jsonText;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -59,10 +52,5 @@ public class Weather {
         });
     }
 
-    private static double parseTemperature(String jsonResponse) {
-        int startIndex = jsonResponse.indexOf("\"temp\":") + 7;
-        int endIndex = jsonResponse.indexOf(",", startIndex);
-        String temperatureString = jsonResponse.substring(startIndex, endIndex);
-        return Double.parseDouble(temperatureString);
-    }
+
 }
