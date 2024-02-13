@@ -30,7 +30,7 @@ public class Weather {
             String apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
             try {
-                String jsonText="";
+                String jsonText=""; //this will contain the JSON response obtained from the openweather API call
                 URL url=new URL(apiUrl);
                 InputStream is=url.openStream();
                 BufferedReader bufferReader=new BufferedReader(new InputStreamReader(is));
@@ -38,11 +38,11 @@ public class Weather {
                 while((line=bufferReader.readLine())!=null){
                     jsonText+=line+"\n";
                 }
-                is.close();
-                bufferReader.close();
+                is.close();//closing the inputstream
+                bufferReader.close();//closing the bufferreader
+                 
 
-
-                // Return the result
+                // Return the result in JSON
                 return jsonText;
 
             } catch (IOException e) {
