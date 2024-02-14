@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Weather {
     private static double temperature; // Declared temperature to be used as a class field
@@ -34,16 +36,15 @@ public class Weather {
                 URL url=new URL(apiUrl);
                 InputStream is=url.openStream();
                 BufferedReader bufferReader=new BufferedReader(new InputStreamReader(is));
-                String line;
+                String line;//String to iterate through JSON within the loop
                 while((line=bufferReader.readLine())!=null){
-                    jsonText+=line+"\n";
+                    jsonText+=line;
                 }
                 is.close();//closing the inputstream
                 bufferReader.close();//closing the bufferreader
-                 
-
-                // Return the result in JSON
-                return jsonText;
+                Manager m1=new Manager();
+                String result=m1.data(jsonText);
+                return result;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -51,6 +52,5 @@ public class Weather {
             }
         });
     }
-
 
 }
