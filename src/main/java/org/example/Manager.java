@@ -8,9 +8,10 @@ class Manager {
             ObjectMapper objectMapper = new ObjectMapper(); //Instance of ObjectMapper class to convert JSON to java Object
             try {
                 JsonNode jsonArrayNode = objectMapper.readTree(text);
-                JsonNode jsonNode = jsonArrayNode.get("main");
-                double tempC = jsonNode.get("temp").asDouble()- 273.15;
-                String res=String.format("%.2f",tempC)+" at "+jsonArrayNode.get("name")+","+jsonArrayNode.get("country");
+                JsonNode main = jsonArrayNode.get("main");
+                double tempC = main.get("temp").asDouble()- 273.15;
+                JsonNode sys=jsonArrayNode.get("sys");
+                String res=String.format("%.2f",tempC)+" at "+jsonArrayNode.get("name")+","+sys.get("country");
                 return res;
             } catch (Exception e) {
                 e.printStackTrace();
