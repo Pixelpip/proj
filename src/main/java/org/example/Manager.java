@@ -7,6 +7,7 @@ class Manager {
         public static String data(String text) {
             ObjectMapper objectMapper = new ObjectMapper(); //Instance of ObjectMapper class to convert JSON to java Object
             try {
+                //refer to the json.html file in old-files to see a sample output of the json receieved after the api call
                 JsonNode jsonArrayNode = objectMapper.readTree(text);
                 JsonNode main = jsonArrayNode.get("main");
                 double tempC = main.get("temp").asDouble()- 273.15;
