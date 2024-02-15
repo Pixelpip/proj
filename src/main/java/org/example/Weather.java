@@ -12,22 +12,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Weather {
-    private static double temperature; // Declared temperature to be used as a class field
-    private  static String formattedTemperature; // class field to limit decimal places of temperature
     public static void main(String[] args) {
         port(8080);//port used by spark framework
 
         // Define a route to render the form
         get("/", (req, res) -> {
             return "<form action='/' method='post'>" +
-                    "Enter the city name: <input type='text' name='username'>" +
+                    "Enter the city name: <input type='text' name='cityname'>" +
                     "<input type='submit' value='Submit'>" +
                     "</form>";
         });
 
         // Define a route to handle form submission
         post("/", (req, res) -> {
-            String city = req.queryParams("username");
+            String city = req.queryParams("cityname");
             String apiKey = "d94a1a5aa3c285a26a3d45c0e357d771";
             String apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
