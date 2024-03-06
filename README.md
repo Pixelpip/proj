@@ -21,6 +21,8 @@ __API Key__
 __Libraries__
 * Jackson library is used for handling JSON 
 * Spark framework is used for building the REST API and displaying output on a webpage
+* OpenCSV to write data to a CSV file
+* Java's built in libraries 
 
 
 Contributors:
