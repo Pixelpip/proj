@@ -11,12 +11,10 @@ import java.net.URL;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-
 public class Weather {
     public static void main(String[] args) {
 
-        port(8080);//port used by spark framework
+        port(8080); // port used by spark framework
 
         // Define a route to render the form
         get("/", (req, res) -> {
@@ -33,25 +31,36 @@ public class Weather {
             String apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
             try {
-                String jsonText=""; //this will contain the JSON response obtained from the openweather API call
-                URL url=new URL(apiUrl);
-                InputStream is=url.openStream();
-                BufferedReader bufferReader=new BufferedReader(new InputStreamReader(is));
-                String line;//String to iterate through JSON within the loop
-                while((line=bufferReader.readLine())!=null){
-                    jsonText+=line;
-                }
-                is.close();//closing the inputstream
-                bufferReader.close();//closing the bufferreader
-                Manager m1=new Manager();
-                String result=m1.data(jsonText);
-                return result;
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
 
+                // Read the response
+                StringBuilder response = new StringBuilder();
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                }
+
+                // Parse the JSON response
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(response.toString());
+
+                // Check if the response indicates an error
+                if (rootNode.has("cod") && rootNode.get("cod").asInt() != 200) {
+                    return "Error: " + rootNode.get("message").asText();
+                }
+
+                // Extract data from JSON and return
+                Manager m1 = new Manager();
+                String result = m1.data(rootNode.toString());
+                return result;
             } catch (IOException e) {
                 e.printStackTrace();
                 return "Error fetching temperature information";
             }
         });
     }
-
 }
